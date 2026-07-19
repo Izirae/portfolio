@@ -108,12 +108,6 @@ export default function Nav() {
           </ul>
 
           <div className="flex items-center gap-3">
-            {/* Status dot */}
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs"
-              style={{ borderColor: 'rgba(61,214,140,0.25)', background: 'rgba(61,214,140,0.07)', color: 'var(--green)' }}>
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--green)', animation: 'pulse 2s infinite' }} />
-              Open to work
-            </div>
 
             {/* CTA */}
             <a
