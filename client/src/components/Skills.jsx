@@ -70,7 +70,7 @@ function SkillCard({ group, index }) {
       />
 
       {/* Header */}
-      <div className="flex items-center justify-between px-5 pt-5 pb-3">
+      <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
         <h3
           className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
           style={{ color: group.color }}
@@ -78,11 +78,13 @@ function SkillCard({ group, index }) {
           <span className="w-2 h-2 rounded-full" style={{ background: group.color }} />
           {group.title}
         </h3>
-        <RadarChart pct={pct} color={group.color} />
+        <div className="flex-shrink-0" style={{ width: 56, height: 56 }}>
+          <RadarChart pct={pct} color={group.color} size={56} />
+        </div>
       </div>
 
       {/* Tags */}
-      <div className="px-5 pb-5 flex flex-wrap gap-2">
+      <div className="px-4 sm:px-5 pb-4 sm:pb-5 flex flex-wrap gap-1.5 sm:gap-2">
         {group.items.map(item => (
           <span
             key={item.label}
@@ -136,7 +138,7 @@ export default function Skills({ skills }) {
   }))
 
   return (
-    <section id="habilidades" className="relative py-24 px-6 max-w-6xl mx-auto overflow-hidden">
+    <section id="habilidades" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
       <GlowOrb x="80%" y="50%" color="var(--brand2)" size={450} opacity={0.07} />
       <GlowOrb x="5%"  y="30%" color="var(--cyan)"   size={300} opacity={0.05} />
 
@@ -149,7 +151,7 @@ export default function Skills({ skills }) {
       </div>
 
       {/* Cards grid */}
-      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-12 sm:mb-16">
         {augmented.map((group, i) => (
           <SkillCard key={group.title} group={group} index={i} />
         ))}

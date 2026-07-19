@@ -88,7 +88,8 @@ function ParticleField() {
     let h = canvas.height = canvas.offsetHeight
     let raf
 
-    const particles = Array.from({ length: 60 }, () => ({
+    const isMobile = window.innerWidth < 768
+    const particles = Array.from({ length: isMobile ? 25 : 60 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
       r: Math.random() * 1.5 + 0.3,
@@ -170,7 +171,7 @@ export default function Hero({ data }) {
   const { github, bio } = data
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-20 pb-24 md:pb-16 overflow-hidden">
       {/* Background */}
       <ParticleField />
       <DotGrid />
@@ -185,7 +186,7 @@ export default function Hero({ data }) {
       <FloatBadge label="🏛️ Morón Municipal"  style={{ top: '68%', right: '5%'  }} delay="1.8s" />
       <FloatBadge label="☁️ Vercel · GitLab"  style={{ top: '22%', left: '4%'   }} delay="0.9s" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full grid lg:grid-cols-2 gap-12 items-center">
 
         {/* ─── Columna izquierda ─── */}
         <div>
@@ -207,14 +208,14 @@ export default function Hero({ data }) {
           {/* Headline */}
           <div className="animate-slide-up stagger-2 mb-2">
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter"
               style={{ color: 'var(--text)' }}
             >
               Full Stack
             </h1>
           </div>
-          <div className="animate-slide-up stagger-3 mb-6 flex items-center" style={{ minHeight: '5rem' }}>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter">
+          <div className="animate-slide-up stagger-3 mb-6 flex items-center" style={{ minHeight: '3.5rem' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none tracking-tighter">
               <TypedRole roles={['Developer', 'Engineer', 'Builder', 'Architect']} />
             </h1>
           </div>
@@ -232,10 +233,10 @@ export default function Hero({ data }) {
           </p>
 
           {/* CTA buttons */}
-          <div className="animate-slide-up stagger-5 flex gap-3 flex-wrap mb-8">
+          <div className="animate-slide-up stagger-5 flex gap-2 sm:gap-3 flex-wrap mb-8">
             <a
               href="#proyectos"
-              className="relative overflow-hidden inline-flex items-center gap-2 text-sm font-bold px-7 py-3.5 rounded-xl text-white transition-all hover:scale-105 active:scale-95 glow-brand"
+              className="relative overflow-hidden inline-flex items-center gap-2 text-sm font-bold px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl text-white transition-all active:scale-95 glow-brand"
               style={{ background: 'linear-gradient(135deg, var(--brand), var(--brand2))' }}
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -245,7 +246,7 @@ export default function Hero({ data }) {
             <a
               href={github}
               target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-bold px-7 py-3.5 rounded-xl border transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 text-sm font-bold px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl border transition-all active:scale-95"
               style={{ borderColor: 'var(--border2)', color: 'var(--text)' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--brand)'; e.currentTarget.style.background = 'rgba(79,142,247,0.07)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border2)'; e.currentTarget.style.background = 'transparent' }}
@@ -255,7 +256,7 @@ export default function Hero({ data }) {
             </a>
             <a
               href="#contacto"
-              className="inline-flex items-center gap-2 text-sm font-bold px-7 py-3.5 rounded-xl border transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 text-sm font-bold px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl border transition-all active:scale-95"
               style={{ borderColor: 'var(--border2)', color: 'var(--muted)' }}
               onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.borderColor = 'var(--border2)' }}
               onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--border2)' }}

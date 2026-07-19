@@ -32,7 +32,7 @@ function ProjectModal({ project, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4"
       style={{ background: 'rgba(5,8,16,0.85)', backdropFilter: 'blur(12px)' }}
       onClick={onClose}
     >
@@ -42,6 +42,8 @@ function ProjectModal({ project, onClose }) {
           background: 'var(--surface)',
           borderColor: project.color,
           boxShadow: `0 0 60px ${project.color}30, 0 24px 80px rgba(0,0,0,0.5)`,
+          maxHeight: '90dvh',
+          overflowY: 'auto',
         }}
         onClick={e => e.stopPropagation()}
       >
@@ -272,7 +274,7 @@ export default function Projects({ projects }) {
   const personal  = visible.filter(p => p.category === 'personal')
 
   return (
-    <section id="proyectos" className="relative py-24 px-6 max-w-6xl mx-auto overflow-hidden">
+    <section id="proyectos" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
       <GlowOrb x="10%" y="40%" color="var(--cyan)"   size={450} opacity={0.05} />
       <GlowOrb x="90%" y="70%" color="var(--brand2)" size={380} opacity={0.06} />
 
@@ -285,12 +287,12 @@ export default function Projects({ projects }) {
       </div>
 
       {/* Filtros */}
-      <div className="relative z-10 flex gap-2 mb-10 flex-wrap">
+      <div className="relative z-10 flex gap-2 mb-8 sm:mb-10 flex-wrap items-center">
         {filters.map(f => (
           <button
             key={f.key}
             onClick={() => setFilter(f.key)}
-            className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-xl border transition-all duration-200 hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-xs font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl border transition-all duration-200 active:scale-95"
             style={
               filter === f.key
                 ? { background: 'linear-gradient(135deg, var(--brand), var(--brand2))', borderColor: 'transparent', color: '#fff', boxShadow: '0 0 20px rgba(79,142,247,0.3)' }
@@ -302,7 +304,7 @@ export default function Projects({ projects }) {
           </button>
         ))}
         <div
-          className="ml-auto text-xs flex items-center gap-1.5 px-3 py-1 rounded-lg"
+          className="text-xs flex items-center gap-1.5 px-3 py-1 rounded-lg ml-auto"
           style={{ color: 'var(--muted)', background: 'var(--surface)' }}
         >
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--green)' }} />

@@ -8,7 +8,7 @@ import Contact from './components/Contact'
 import { Divider } from './components/Shared'
 import { fetchPortfolio } from './api'
 
-/* ── Cursor personalizado ── */
+/* ── Cursor personalizado (solo desktop/pointer) ── */
 function CustomCursor() {
   const dotRef  = useRef(null)
   const ringRef = useRef(null)
@@ -16,7 +16,11 @@ function CustomCursor() {
   const ring    = useRef({ x: 0, y: 0 })
   const rafRef  = useRef(null)
 
+  // No renderizar en dispositivos touch
+  const isTouch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
+
   useEffect(() => {
+    if (isTouch) return
     const onMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY }
       if (dotRef.current) {
@@ -52,7 +56,9 @@ function CustomCursor() {
       document.removeEventListener('mousemove', onMove)
       cancelAnimationFrame(rafRef.current)
     }
-  }, [])
+  }, [isTouch])
+
+  if (isTouch) return null
 
   return (
     <>

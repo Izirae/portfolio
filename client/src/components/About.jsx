@@ -149,16 +149,16 @@ export default function About({ data }) {
   const { bio, stats, github } = data
 
   return (
-    <section id="sobre-mi" className="relative py-24 px-6 max-w-6xl mx-auto overflow-hidden">
+    <section id="sobre-mi" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
       <GlowOrb x="50%" y="50%" color="var(--brand)" size={550} opacity={0.04} />
       <GlowOrb x="90%" y="10%" color="var(--purple)" size={300} opacity={0.05} />
 
-      <div className="relative z-10 mb-14">
+      <div className="relative z-10 mb-10 sm:mb-14">
         <SectionBadge label="Quién soy" color="purple" />
         <SectionTitle>Sobre <span className="gradient-text">mí</span></SectionTitle>
       </div>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 items-start">
 
         {/* ── Columna izquierda: bio + timeline ── */}
         <div>
@@ -197,9 +197,9 @@ export default function About({ data }) {
         </div>
 
         {/* ── Columna derecha: stats + expertise ── */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Stat cards */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {stats.map((s, i) => <StatCard key={s.num + s.label} stat={s} index={i} />)}
           </div>
 
