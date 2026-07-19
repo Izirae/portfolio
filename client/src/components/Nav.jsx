@@ -48,16 +48,6 @@ export default function Nav() {
           borderBottom: scrolled ? '1px solid rgba(26,39,64,0.9)' : '1px solid transparent',
         }}
       >
-        {/* Indicador de progreso en la nav */}
-        <div
-          className="absolute bottom-0 left-0 h-[1px] transition-all duration-100"
-          style={{
-            width: `${progress}%`,
-            background: 'linear-gradient(90deg, var(--brand), var(--brand2), var(--cyan))',
-            opacity: scrolled ? 1 : 0,
-          }}
-        />
-
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="group flex items-center gap-2">
@@ -122,17 +112,19 @@ export default function Nav() {
             {/* Hamburger mobile */}
             <button
               id="menu-btn"
-              className="md:hidden flex flex-col gap-1.5 p-2 rounded-lg transition-all"
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg transition-all"
               style={{ color: 'var(--muted)' }}
               onClick={() => setMenuOpen(o => !o)}
               aria-label="Menu"
             >
-              <span className="block w-5 h-0.5 rounded transition-all duration-300"
-                style={{ background: menuOpen ? 'var(--brand)' : 'var(--muted)', transform: menuOpen ? 'rotate(45deg) translate(3px, 4px)' : '' }} />
-              <span className="block w-5 h-0.5 rounded transition-all duration-300"
-                style={{ background: menuOpen ? 'transparent' : 'var(--muted)' }} />
-              <span className="block w-5 h-0.5 rounded transition-all duration-300"
-                style={{ background: menuOpen ? 'var(--brand)' : 'var(--muted)', transform: menuOpen ? 'rotate(-45deg) translate(3px, -4px)' : '' }} />
+              <div className="relative w-5 h-4 flex flex-col justify-between">
+                <span className="block w-5 h-0.5 rounded transition-all duration-300 origin-center"
+                  style={{ background: menuOpen ? 'var(--brand)' : 'var(--muted)', transform: menuOpen ? 'translateY(7px) rotate(45deg)' : '' }} />
+                <span className="block w-5 h-0.5 rounded transition-all duration-300"
+                  style={{ background: menuOpen ? 'transparent' : 'var(--muted)', transform: menuOpen ? 'scaleX(0)' : '' }} />
+                <span className="block w-5 h-0.5 rounded transition-all duration-300 origin-center"
+                  style={{ background: menuOpen ? 'var(--brand)' : 'var(--muted)', transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : '' }} />
+              </div>
             </button>
           </div>
         </div>
