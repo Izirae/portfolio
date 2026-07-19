@@ -16,7 +16,7 @@ const links = [
   },
   {
     label:   'Email',
-    handle:  'tu@email.com',
+    handle:  'lautaro.bazzola@gmail.com',
     desc:    'Respondo en menos de 24 horas',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -29,7 +29,7 @@ const links = [
   },
   {
     label:   'LinkedIn',
-    handle:  'tu-perfil',
+    handle:  'https://linkedin.com/in/izirae/',
     desc:    'Perfil profesional y experiencia laboral',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
