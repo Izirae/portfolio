@@ -226,7 +226,7 @@ export default function Hero({ data }) {
           </p>
 
           <p
-            className="animate-slide-up stagger-4 text-base leading-relaxed mb-8 max-w-lg"
+            className="animate-slide-up stagger-4 text-base leading-relaxed mb-8 max-w-lg text-justify"
             style={{ color: 'var(--muted)' }}
           >
             {bio[0]}

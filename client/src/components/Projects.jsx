@@ -75,7 +75,7 @@ function ProjectModal({ project, onClose }) {
 
         {/* Body */}
         <div className="px-6 pb-4">
-          <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--muted)' }}>
+          <p className="text-sm leading-relaxed mb-4 text-justify" style={{ color: 'var(--muted)' }}>
             {project.desc}
           </p>
           {project.highlights && (
@@ -85,7 +85,7 @@ function ProjectModal({ project, onClose }) {
               </h4>
               <ul className="space-y-2">
                 {project.highlights.map((h, i) => (
-                  <li key={i} className="text-xs flex gap-2" style={{ color: 'var(--muted)' }}>
+                  <li key={i} className="text-xs flex gap-2 text-justify" style={{ color: 'var(--muted)' }}>
                     <span style={{ color: project.color }} className="font-bold flex-shrink-0 mt-0.5">›</span>
                     {h}
                   </li>
@@ -215,7 +215,7 @@ function ProjectCard({ project, index }) {
             </span>
           </div>
 
-          <p className="text-xs leading-relaxed flex-1 relative z-10" style={{ color: 'var(--muted)' }}>
+          <p className="text-xs leading-relaxed flex-1 relative z-10 text-justify" style={{ color: 'var(--muted)' }}>
             {project.desc}
           </p>
 
@@ -281,7 +281,7 @@ export default function Projects({ projects }) {
       <div className="relative z-10 mb-6">
         <SectionBadge label="Trabajo real" color="green" />
         <SectionTitle>Proyectos <span className="gradient-text">destacados</span></SectionTitle>
-        <p className="mt-3 text-sm max-w-xl" style={{ color: 'var(--muted)' }}>
+        <p className="mt-3 text-sm max-w-xl text-justify" style={{ color: 'var(--muted)' }}>
           Hacé click en cualquier tarjeta para ver los detalles completos.
         </p>
       </div>

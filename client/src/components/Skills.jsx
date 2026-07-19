@@ -2,9 +2,9 @@ import { useRef, useEffect, useState } from 'react'
 import { GlowOrb, SectionBadge, SectionTitle, useReveal } from './Shared'
 
 /* Mini radar SVG para el grupo de habilidades */
-function RadarChart({ pct, color }) {
+function RadarChart({ pct, color, size = 80 }) {
   const points = 6
-  const cx = 40, cy = 40, r = 28
+  const cx = size / 2, cy = size / 2, r = size * 0.35
   const coords = (i, rr) => {
     const a = (Math.PI * 2 / points) * i - Math.PI / 2
     return { x: cx + rr * Math.cos(a), y: cy + rr * Math.sin(a) }
@@ -12,24 +12,33 @@ function RadarChart({ pct, color }) {
   const poly = (rr) => Array.from({ length: points }, (_, i) => coords(i, rr))
     .map(p => `${p.x},${p.y}`).join(' ')
 
+  /* Colores fijos de alto contraste para las estructuras del radar */
+  const gridColor  = 'rgba(255,255,255,0.12)'
+  const spokeColor = 'rgba(255,255,255,0.10)'
+
   return (
-    <svg width="80" height="80" viewBox="0 0 80 80">
-      {/* Fondo */}
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {/* Fondos de rejilla — color neutro independiente del color del grupo */}
       {[1, 0.66, 0.33].map(f => (
         <polygon key={f} points={poly(r * f)}
-          fill="none" stroke={color} strokeWidth="0.5" opacity="0.15" />
+          fill="none" stroke={gridColor} strokeWidth="0.8" />
       ))}
       {/* Radios */}
       {Array.from({ length: points }, (_, i) => {
         const p = coords(i, r)
         return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y}
-          stroke={color} strokeWidth="0.5" opacity="0.15" />
+          stroke={spokeColor} strokeWidth="0.8" />
       })}
-      {/* Área de habilidad */}
+      {/* Área rellena — color del grupo con buen contraste */}
       <polygon points={poly(r * (pct / 100))}
-        fill={color} fillOpacity="0.18" stroke={color} strokeWidth="1.5" />
+        fill={color} fillOpacity="0.25" stroke={color} strokeWidth="1.5" strokeOpacity="0.9" />
+      {/* Vértices del polígono de datos */}
+      {Array.from({ length: points }, (_, i) => {
+        const p = coords(i, r * (pct / 100))
+        return <circle key={i} cx={p.x} cy={p.y} r="1.5" fill={color} opacity="0.9" />
+      })}
       {/* Centro */}
-      <circle cx={cx} cy={cy} r="3" fill={color} opacity="0.6" />
+      <circle cx={cx} cy={cy} r="2.5" fill={color} opacity="0.7" />
     </svg>
   )
 }
@@ -104,14 +113,13 @@ function SkillCard({ group, index }) {
   )
 }
 
-/* Barra de expertise animada */
+/* Barra de expertise animada — sin % */
 function ExpertiseBar({ label, pct, color, delay = 0 }) {
   const [ref, visible] = useReveal(0.2)
   return (
     <div ref={ref} className="mb-4">
-      <div className="flex justify-between mb-1.5">
+      <div className="mb-1.5">
         <span className="text-xs font-medium" style={{ color: 'var(--muted)' }}>{label}</span>
-        <span className="text-xs font-bold" style={{ color }}>{pct}%</span>
       </div>
       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
         <div
@@ -145,7 +153,7 @@ export default function Skills({ skills }) {
       <div className="relative z-10 mb-14">
         <SectionBadge label="Stack tecnológico" color="brand" />
         <SectionTitle>Habilidades &amp; <span className="gradient-text">tecnologías</span></SectionTitle>
-        <p className="mt-3 text-sm max-w-xl" style={{ color: 'var(--muted)' }}>
+        <p className="mt-3 text-sm max-w-xl text-justify" style={{ color: 'var(--muted)' }}>
           Tecnologías que uso día a día en proyectos de producción — desde APIs gubernamentales hasta e-commerce y bots.
         </p>
       </div>

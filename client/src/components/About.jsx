@@ -88,7 +88,7 @@ function TimelineItem({ item, index }) {
             <span className="text-[10px]" style={{ color: 'var(--muted)' }}>{item.period}</span>
           </div>
         </div>
-        <p className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>{item.desc}</p>
+        <p className="text-xs leading-relaxed text-justify" style={{ color: 'var(--muted)' }}>{item.desc}</p>
       </div>
     </div>
   )
@@ -164,7 +164,7 @@ export default function About({ data }) {
         <div>
           <div className="space-y-4 mb-10">
             {bio.map((p, i) => (
-              <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{p}</p>
+              <p key={i} className="text-sm leading-relaxed text-justify" style={{ color: 'var(--muted)' }}>{p}</p>
             ))}
           </div>
 
@@ -233,9 +233,8 @@ function ExpertiseBarInline({ label, pct, color, delay = 0 }) {
   const [ref, visible] = useReveal(0.2)
   return (
     <div ref={ref} className="mb-3">
-      <div className="flex justify-between mb-1.5">
+      <div className="mb-1.5">
         <span className="text-xs" style={{ color: 'var(--muted)' }}>{label}</span>
-        <span className="text-xs font-bold" style={{ color }}>{pct}%</span>
       </div>
       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
         <div

@@ -136,7 +136,7 @@ export default function Contact({ data }) {
           <SectionBadge label="Contacto" color="cyan" />
           <SectionTitle>¿<span className="gradient-text">Hablamos</span>?</SectionTitle>
 
-          <p className="mt-4 text-sm leading-relaxed max-w-md mx-auto" style={{ color: 'var(--muted)' }}>
+          <p className="mt-4 text-sm leading-relaxed max-w-md mx-auto text-justify" style={{ color: 'var(--muted)' }}>
             Estoy buscando nuevas oportunidades. Si tenés un proyecto o posición que creas que encaja
             con mi perfil, escribime — respondo rápido.
           </p>
@@ -181,7 +181,7 @@ export default function Contact({ data }) {
             <span className="w-2 h-2 rounded-full" style={{ background: 'var(--green)', animation: 'pulse 2s ease infinite' }} />
             <span className="text-sm font-bold" style={{ color: 'var(--green)' }}>Disponible</span>
           </div>
-          <p className="text-xs" style={{ color: 'var(--muted)' }}>
+          <p className="text-xs text-justify" style={{ color: 'var(--muted)' }}>
             Buenos Aires, Argentina · Remoto / Presencial · Freelance / Relación de dependencia
           </p>
         </div>
