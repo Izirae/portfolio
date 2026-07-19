@@ -7,7 +7,7 @@ const langDots = [
   { color: '#38c5d9', label: 'React'         },
   { color: '#3dd68c', label: 'Node.js'       },
   { color: '#4f8ef7', label: 'TypeScript'    },
-  { color: '#f76f6f', label: 'MySQL · Oracle'},
+  { color: '#f76f6f', label: 'SQL Server · MySQL'},
 ]
 
 const terminalLines = [
