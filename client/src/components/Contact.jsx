@@ -52,12 +52,12 @@ function ContactCard({ link, data }) {
     ? data.linkedin
     : data[link.href]
 
-  // Mostrar handle legible: email y github desde data, linkedin solo el path final
+  // Mostrar handle legible: email y github desde data, linkedin muestra el nombre
   const handle = link.href === 'email'
     ? data.email
     : link.href === 'github'
     ? data.github?.split('/').pop()
-    : data.linkedin?.replace('https://linkedin.com/in/', '').replace(/\/$/, '')
+    : data.name
 
   return (
     <a
