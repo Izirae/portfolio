@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { GlowOrb, SectionBadge, SectionTitle, Counter, useReveal } from './Shared'
+import { GlowOrb, SectionBadge, SectionTitle, Counter, useReveal, MeshBg } from './Shared'
 
 /* Timeline de experiencia */
 const experience = [
@@ -7,7 +7,7 @@ const experience = [
     period:   '2021 – Actualidad',
     role:     'Full Stack Developer',
     company:  'Municipalidad de Morón',
-    desc:     'Desarrollo y mantenimiento del ecosistema de microservicios PHP/Laravel. Integración con RAFAM, Oracle, PNET e Interbanking. Portal de tasas, débito automático, portal de proveedores y sistema de permisos LDAP.',
+    desc:     'Desarrollo y mantenimiento del ecosistema de microservicios PHP/Laravel. Integración con RAFAM, Oracle, Provincia.Net e Interbanking. Portal de tasas, débito automático, portal de proveedores y sistema de permisos LDAP.',
     color:    '#4f8ef7',
     icon:     '🏛️',
     current:  true,
@@ -34,6 +34,7 @@ const experience = [
 
 function TimelineItem({ item, index }) {
   const [ref, visible] = useReveal(0.15)
+  const [hovered, setHovered] = useState(false)
   return (
     <div
       ref={ref}
@@ -54,11 +55,11 @@ function TimelineItem({ item, index }) {
 
       {/* Dot */}
       <div
-        className="absolute left-0 top-1 w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs"
+        className="absolute left-0 top-1 w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs transition-all duration-300"
         style={{
           background: `${item.color}18`,
           borderColor: item.color,
-          boxShadow: item.current ? `0 0 16px ${item.color}50` : 'none',
+          boxShadow: item.current ? `0 0 16px ${item.color}50` : hovered ? `0 0 10px ${item.color}40` : 'none',
         }}
       >
         {item.icon}
@@ -66,11 +67,24 @@ function TimelineItem({ item, index }) {
 
       {/* Content */}
       <div
-        className="rounded-xl border p-5 transition-all duration-300 hover:scale-[1.01]"
-        style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = item.color; e.currentTarget.style.boxShadow = `0 0 20px ${item.color}18` }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = 'none' }}
+        className="rounded-xl border p-5 transition-all duration-300"
+        style={{
+          background: hovered ? 'var(--surface2)' : 'var(--surface)',
+          borderColor: hovered ? item.color : 'var(--border)',
+          boxShadow: hovered ? `0 0 24px ${item.color}18` : 'none',
+          transform: hovered ? 'translateX(4px)' : 'translateX(0)',
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
+        {/* Top accent */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px rounded-t-xl transition-opacity duration-300"
+          style={{
+            background: `linear-gradient(90deg, ${item.color}, transparent)`,
+            opacity: hovered ? 0.6 : 0,
+          }}
+        />
         <div className="flex items-start justify-between flex-wrap gap-2 mb-2">
           <div>
             <h4 className="text-sm font-bold" style={{ color: 'var(--text)' }}>{item.role}</h4>
@@ -99,42 +113,47 @@ function StatCard({ stat, index }) {
   const suffix = stat.num.replace(/[\d]/g, '')
   const target = parseInt(numStr) || 0
   const [ref, visible] = useReveal(0.2)
+  const [hovered, setHovered] = useState(false)
+
+  const colors = ['#4f8ef7', '#b07ef7', '#38c5d9', '#3dd68c']
+  const color = colors[index % colors.length]
 
   return (
     <div
       ref={ref}
-      className="relative rounded-2xl border p-6 overflow-hidden transition-all duration-500 cursor-default group"
+      className="relative rounded-2xl border p-6 overflow-hidden transition-all duration-500 cursor-default"
       style={{
         background:  'var(--surface)',
-        borderColor: 'var(--border)',
+        borderColor: hovered ? color : 'var(--border)',
         opacity:     visible ? 1 : 0,
-        transform:   visible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.97)',
+        transform:   visible
+          ? hovered ? 'translateY(-4px) scale(1.02)' : 'translateY(0) scale(1)'
+          : 'translateY(20px) scale(0.97)',
+        boxShadow: hovered ? `0 8px 40px ${color}18, 0 0 0 1px ${color}12` : 'none',
         transitionDelay: `${index * 90}ms`,
       }}
-      onMouseEnter={e => {
-        e.currentTarget.style.borderColor = 'var(--brand)'
-        e.currentTarget.style.boxShadow   = '0 0 30px rgba(79,142,247,0.12)'
-        e.currentTarget.style.transform   = 'translateY(-3px) scale(1.02)'
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.borderColor = 'var(--border)'
-        e.currentTarget.style.boxShadow   = 'none'
-        e.currentTarget.style.transform   = 'translateY(0) scale(1)'
-      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      {/* Fondo gradiente en hover */}
+      {/* Scan line */}
+      {hovered && <span className="scan-overlay" />}
+
+      {/* Glow bg */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: 'linear-gradient(135deg, rgba(79,142,247,0.04), transparent)' }}
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        style={{ background: `radial-gradient(circle at top right, ${color}12, transparent 70%)`, opacity: hovered ? 1 : 0 }}
       />
 
-      {/* Glow corner */}
+      {/* Top accent */}
       <div
-        className="pointer-events-none absolute -top-6 -right-6 w-20 h-20 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-        style={{ background: 'var(--brand)' }}
+        className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl transition-opacity duration-300"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
+          opacity: hovered ? 1 : 0,
+        }}
       />
 
-      <div className="text-4xl font-black mb-2 leading-none" style={{ color: 'var(--brand)' }}>
+      <div className="text-4xl font-black mb-2 leading-none stat-num" style={{ color }}>
         {visible ? <Counter target={target} suffix={suffix} /> : `0${suffix}`}
       </div>
       <div className="text-xs leading-relaxed" style={{ color: 'var(--muted)' }}>
@@ -144,12 +163,36 @@ function StatCard({ stat, index }) {
   )
 }
 
+/* Párrafo con keywords destacadas */
+function BioParagraph({ text, keywords }) {
+  if (!keywords?.length) {
+    return <p className="text-sm leading-relaxed text-justify" style={{ color: 'var(--muted)' }}>{text}</p>
+  }
+  const parts = text.split(new RegExp(`(${keywords.join('|')})`, 'g'))
+  return (
+    <p className="text-sm leading-relaxed text-justify" style={{ color: 'var(--muted)' }}>
+      {parts.map((part, i) =>
+        keywords.includes(part)
+          ? <span key={i} className="font-semibold" style={{ color: 'var(--text)' }}>{part}</span>
+          : part
+      )}
+    </p>
+  )
+}
+
+const bioKeywords = [
+  ['Full Stack', 'Buenos Aires', 'PHP', 'Laravel', 'Lumen', 'Node.js', 'TypeScript', 'React'],
+  ['Municipalidad de Morón', 'microservicios', 'producción', 'SQL Server', 'MySQL', 'RAFAM', 'Oracle', 'Provincia.Net', 'Mercado Pago', 'Interbanking', 'LDAP'],
+  ['TypeScript', 'Telegram', 'Firebase', 'código limpio'],
+]
+
 export default function About({ data }) {
   if (!data) return null
   const { bio, stats, github } = data
 
   return (
     <section id="sobre-mi" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
+      <MeshBg />
       <GlowOrb x="50%" y="50%" color="var(--brand)" size={550} opacity={0.04} />
       <GlowOrb x="90%" y="10%" color="var(--purple)" size={300} opacity={0.05} />
 
@@ -158,11 +201,11 @@ export default function About({ data }) {
         <SectionTitle>Sobre <span className="gradient-text">mí</span></SectionTitle>
       </div>
 
-      {/* ── Bio a ancho completo ── */}
+      {/* ── Bio con keywords ── */}
       <div className="relative z-10 mb-10">
         <div className="space-y-4 mb-8">
           {bio.map((p, i) => (
-            <p key={i} className="text-sm leading-relaxed text-justify" style={{ color: 'var(--muted)' }}>{p}</p>
+            <BioParagraph key={i} text={p} keywords={bioKeywords[i] || []} />
           ))}
         </div>
         <a
@@ -170,7 +213,7 @@ export default function About({ data }) {
           target="_blank" rel="noreferrer"
           className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-3 rounded-xl border transition-all hover:scale-105"
           style={{ borderColor: 'var(--border2)', color: 'var(--text)', background: 'var(--surface)' }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--brand)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(79,142,247,0.12)' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--brand)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(79,142,247,0.15)' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border2)'; e.currentTarget.style.boxShadow = 'none' }}
         >
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>

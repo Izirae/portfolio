@@ -22,7 +22,7 @@ export function DotGrid() {
     <div
       className="pointer-events-none absolute inset-0"
       style={{
-        backgroundImage: 'radial-gradient(circle, rgba(79,142,247,0.1) 1px, transparent 1px)',
+        backgroundImage: 'radial-gradient(circle, rgba(79,142,247,0.12) 1px, transparent 1px)',
         backgroundSize: '36px 36px',
         maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
       }}
@@ -41,6 +41,22 @@ export function LineGrid() {
           linear-gradient(90deg, rgba(79,142,247,0.06) 1px, transparent 1px)
         `,
         backgroundSize: '60px 60px',
+      }}
+    />
+  )
+}
+
+/* ── Mesh gradient de fondo ── */
+export function MeshBg() {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0"
+      style={{
+        background: `
+          radial-gradient(ellipse at 15% 50%, rgba(79,142,247,0.09) 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 20%, rgba(124,92,247,0.08) 0%, transparent 55%),
+          radial-gradient(ellipse at 55% 85%, rgba(56,197,217,0.06) 0%, transparent 50%)
+        `,
       }}
     />
   )
@@ -79,7 +95,7 @@ export function SectionBadge({ label, color = 'brand' }) {
   )
 }
 
-/* ── Título de sección ── */
+/* ── Título de sección con underline gradiente ── */
 export function SectionTitle({ children }) {
   return (
     <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
@@ -103,7 +119,7 @@ export function TerminalWindow({ lines = [], className = '' }) {
   useEffect(() => {
     if (!visible) return
     if (shown >= lines.length) return
-    const t = setTimeout(() => setShown(s => s + 1), 350)
+    const t = setTimeout(() => setShown(s => s + 1), 330)
     return () => clearTimeout(t)
   }, [visible, shown, lines.length])
 
@@ -172,7 +188,7 @@ export function Counter({ target, suffix = '', duration = 1400 }) {
     return () => clearInterval(t)
   }, [started, target, duration])
 
-  return <span ref={ref}>{count}{suffix}</span>
+  return <span ref={ref} className="stat-num">{count}{suffix}</span>
 }
 
 /* ── Aurora background ── */
@@ -180,28 +196,86 @@ export function Aurora() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
-        className="absolute w-[600px] h-[600px] rounded-full blur-3xl animate-aurora opacity-10"
+        className="absolute w-[700px] h-[700px] rounded-full blur-3xl animate-aurora opacity-10"
         style={{
           background: 'radial-gradient(ellipse, var(--brand) 0%, var(--brand2) 50%, transparent 70%)',
-          top: '10%', left: '20%',
+          top: '5%', left: '15%',
         }}
       />
       <div
-        className="absolute w-[500px] h-[500px] rounded-full blur-3xl opacity-8"
+        className="absolute w-[500px] h-[500px] rounded-full blur-3xl"
         style={{
           background: 'radial-gradient(ellipse, var(--cyan) 0%, transparent 70%)',
           animation: 'aurora 18s ease-in-out infinite reverse',
-          top: '50%', right: '10%',
+          opacity: 0.07,
+          top: '50%', right: '5%',
         }}
       />
       <div
-        className="absolute w-[400px] h-[400px] rounded-full blur-3xl opacity-6"
+        className="absolute w-[400px] h-[400px] rounded-full blur-3xl"
         style={{
           background: 'radial-gradient(ellipse, var(--purple) 0%, transparent 70%)',
           animation: 'aurora 22s ease-in-out infinite',
+          opacity: 0.06,
           bottom: '0%', left: '50%',
         }}
       />
     </div>
+  )
+}
+
+/* ── Texto con efecto glitch ── */
+export function GlitchText({ children, className = '', style = {} }) {
+  return (
+    <span
+      className={`relative inline-block animate-glitch ${className}`}
+      style={style}
+      data-text={children}
+    >
+      {children}
+    </span>
+  )
+}
+
+/* ── Borde animado tipo neon ── */
+export function NeonCard({ children, color = 'var(--brand)', className = '', style = {} }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      className={`relative rounded-2xl overflow-hidden transition-all duration-300 ${className}`}
+      style={{
+        border: `1px solid ${hovered ? color : 'var(--border)'}`,
+        boxShadow: hovered ? `0 0 30px ${color}25, 0 0 60px ${color}10, inset 0 0 30px ${color}05` : 'none',
+        ...style,
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Top accent line */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px transition-opacity duration-300"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
+          opacity: hovered ? 1 : 0.2,
+        }}
+      />
+      {children}
+    </div>
+  )
+}
+
+/* ── Indicador de actividad en vivo ── */
+export function LiveDot({ color = 'var(--green)', label = 'Online' }) {
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className="relative flex h-2 w-2">
+        <span
+          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+          style={{ background: color }}
+        />
+        <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: color }} />
+      </span>
+      <span className="text-xs font-semibold" style={{ color }}>{label}</span>
+    </span>
   )
 }

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
-import { GlowOrb, SectionBadge, SectionTitle, useReveal } from './Shared'
+import { GlowOrb, SectionBadge, SectionTitle, useReveal, MeshBg } from './Shared'
 
-/* Mini radar SVG para el grupo de habilidades */
+/* Radar hexagonal SVG */
 function RadarChart({ pct, color, size = 80 }) {
   const points = 6
   const cx = size / 2, cy = size / 2, r = size * 0.35
@@ -14,29 +14,22 @@ function RadarChart({ pct, color, size = 80 }) {
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      {/* Fondo relleno oscuro para que el polígono tenga contraste */}
-      <polygon points={poly(r)}
-        fill="rgba(0,0,0,0.35)" stroke="none" />
-      {/* Rejilla — anillos blancos bien visibles */}
+      <polygon points={poly(r)} fill="rgba(0,0,0,0.35)" stroke="none" />
       {[1, 0.66, 0.33].map(f => (
         <polygon key={f} points={poly(r * f)}
-          fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="0.8" />
+          fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" />
       ))}
-      {/* Radios */}
       {Array.from({ length: points }, (_, i) => {
         const p = coords(i, r)
         return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y}
-          stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" />
+          stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" />
       })}
-      {/* Área rellena del grupo */}
       <polygon points={poly(r * (pct / 100))}
         fill={color} fillOpacity="0.40" stroke={color} strokeWidth="1.5" strokeOpacity="1" />
-      {/* Vértices */}
       {Array.from({ length: points }, (_, i) => {
         const p = coords(i, r * (pct / 100))
         return <circle key={i} cx={p.x} cy={p.y} r="1.5" fill={color} opacity="1" />
       })}
-      {/* Centro */}
       <circle cx={cx} cy={cy} r="2" fill={color} opacity="0.9" />
     </svg>
   )
@@ -54,7 +47,9 @@ function SkillCard({ group, index }) {
       style={{
         background: hovered ? 'var(--surface2)' : 'var(--surface)',
         borderColor: hovered ? group.color : 'var(--border)',
-        boxShadow: hovered ? `0 8px 40px ${group.color}22, 0 0 0 1px ${group.color}18` : 'none',
+        boxShadow: hovered
+          ? `0 8px 40px ${group.color}22, 0 0 0 1px ${group.color}18, inset 0 0 30px ${group.color}05`
+          : 'none',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(22px)',
         transitionDelay: `${index * 70}ms`,
@@ -70,22 +65,42 @@ function SkillCard({ group, index }) {
           opacity: hovered ? 1 : 0.25,
         }}
       />
+      {/* Scan effect */}
+      {hovered && <span className="scan-overlay" />}
 
       {/* Glow bg */}
       <div
-        className="pointer-events-none absolute -top-12 -right-12 w-36 h-36 rounded-full blur-2xl transition-opacity duration-500"
-        style={{ background: group.color, opacity: hovered ? 0.1 : 0 }}
+        className="pointer-events-none absolute -top-12 -right-12 w-40 h-40 rounded-full blur-2xl transition-opacity duration-500"
+        style={{ background: group.color, opacity: hovered ? 0.12 : 0 }}
       />
 
       {/* Header */}
       <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
-        <h3
-          className="text-xs font-bold uppercase tracking-widest flex items-center gap-2"
-          style={{ color: group.color }}
-        >
-          <span className="w-2 h-2 rounded-full" style={{ background: group.color }} />
-          {group.title}
-        </h3>
+        <div>
+          <h3
+            className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 mb-1"
+            style={{ color: group.color }}
+          >
+            <span className="w-2 h-2 rounded-full" style={{ background: group.color, boxShadow: `0 0 6px ${group.color}` }} />
+            {group.title}
+          </h3>
+          {/* Mini barra de nivel */}
+          <div className="flex items-center gap-1.5">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="h-1 w-4 rounded-sm transition-all duration-300"
+                style={{
+                  background: i < Math.round(pct / 20)
+                    ? group.color
+                    : 'var(--border)',
+                  boxShadow: i < Math.round(pct / 20) ? `0 0 4px ${group.color}` : 'none',
+                }}
+              />
+            ))}
+            <span className="text-[10px] font-semibold ml-1" style={{ color: group.color }}>{pct}%</span>
+          </div>
+        </div>
         <div className="flex-shrink-0" style={{ width: 56, height: 56 }}>
           <RadarChart pct={pct} color={group.color} size={56} />
         </div>
@@ -112,22 +127,28 @@ function SkillCard({ group, index }) {
   )
 }
 
-/* Barra de expertise animada — sin % */
+/* Barra de expertise neon animada */
 function ExpertiseBar({ label, pct, color, delay = 0 }) {
   const [ref, visible] = useReveal(0.2)
   return (
-    <div ref={ref} className="mb-4">
-      <div className="mb-1.5">
-        <span className="text-xs font-medium" style={{ color: 'var(--muted)' }}>{label}</span>
+    <div ref={ref} className="mb-5">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-semibold" style={{ color: 'var(--muted)' }}>{label}</span>
+        <span
+          className="text-[10px] font-bold tabular-nums transition-all duration-300"
+          style={{ color: visible ? color : 'transparent' }}
+        >
+          {pct}%
+        </span>
       </div>
-      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
+      <div className="skill-bar-track">
         <div
-          className="h-full rounded-full transition-all duration-1000"
+          className="skill-bar-fill"
           style={{
             width: visible ? `${pct}%` : '0%',
-            background: `linear-gradient(90deg, ${color}, ${color}88)`,
+            background: `linear-gradient(90deg, ${color}88, ${color})`,
+            boxShadow: visible ? `0 0 10px ${color}60, 0 0 20px ${color}30` : 'none',
             transitionDelay: `${delay}ms`,
-            boxShadow: `0 0 8px ${color}60`,
           }}
         />
       </div>
@@ -138,7 +159,6 @@ function ExpertiseBar({ label, pct, color, delay = 0 }) {
 export default function Skills({ skills }) {
   if (!skills?.length) return null
 
-  /* Augmentar skills con % de radar */
   const augmented = skills.map((g, i) => ({
     ...g,
     pct: [92, 80, 85, 78, 82, 70][i] ?? 75,
@@ -146,6 +166,7 @@ export default function Skills({ skills }) {
 
   return (
     <section id="habilidades" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
+      <MeshBg />
       <GlowOrb x="80%" y="50%" color="var(--brand2)" size={450} opacity={0.07} />
       <GlowOrb x="5%"  y="30%" color="var(--cyan)"   size={300} opacity={0.05} />
 
@@ -164,12 +185,15 @@ export default function Skills({ skills }) {
         ))}
       </div>
 
-      {/* Expertise bars */}
+      {/* Expertise bars con diseño neon */}
       <div
-        className="relative z-10 rounded-2xl border p-6 lg:p-8"
+        className="relative z-10 rounded-2xl border p-6 lg:p-8 overflow-hidden"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
-        <div className="flex items-center gap-3 mb-6">
+        {/* Scan line de fondo */}
+        <span className="scan-overlay" />
+
+        <div className="flex items-center gap-3 mb-8">
           <div
             className="w-8 h-8 rounded-lg flex items-center justify-center"
             style={{ background: 'rgba(79,142,247,0.1)', color: 'var(--brand)' }}
@@ -181,15 +205,17 @@ export default function Skills({ skills }) {
           <h4 className="text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--brand)' }}>
             Nivel de expertise
           </h4>
+          <div className="ml-auto h-px flex-1 max-w-32" style={{ background: 'linear-gradient(90deg, var(--border), transparent)' }} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
           {[
-            { label: 'PHP / Laravel',   pct: 92, color: '#b07ef7', delay: 0   },
-            { label: 'React / Vite',    pct: 85, color: '#38c5d9', delay: 100 },
-            { label: 'Node.js / TS',    pct: 80, color: '#3dd68c', delay: 200 },
-            { label: 'MySQL / Oracle',  pct: 78, color: '#f7b155', delay: 300 },
-            { label: 'Docker',          pct: 70, color: '#4f8ef7', delay: 400 },
-            { label: 'APIs / Pagos',    pct: 82, color: '#f76f6f', delay: 100 },
+            { label: 'PHP / Laravel',        pct: 92, color: '#b07ef7', delay: 0   },
+            { label: 'React / Vite',          pct: 85, color: '#38c5d9', delay: 100 },
+            { label: 'Node.js / TypeScript',  pct: 80, color: '#3dd68c', delay: 200 },
+            { label: 'SQL Server / MySQL',    pct: 78, color: '#f7b155', delay: 300 },
+            { label: 'Docker / DevOps',       pct: 70, color: '#4f8ef7', delay: 400 },
+            { label: 'APIs / Pagos',          pct: 82, color: '#f76f6f', delay: 100 },
           ].map(bar => (
             <ExpertiseBar key={bar.label} {...bar} />
           ))}

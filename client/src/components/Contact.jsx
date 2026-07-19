@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { GlowOrb, SectionBadge, SectionTitle, Aurora } from './Shared'
+import { GlowOrb, SectionBadge, SectionTitle, Aurora, LiveDot } from './Shared'
 
 const links = [
   {
@@ -45,14 +45,12 @@ const links = [
 function ContactCard({ link, data }) {
   const [hovered, setHovered] = useState(false)
 
-  // Construir href: email → mailto, linkedin → URL directa del handle, github → data
   const href = link.href === 'email'
     ? `mailto:${data.email}`
     : link.href === 'linkedin'
     ? data.linkedin
     : data[link.href]
 
-  // Mostrar handle legible: email y github desde data, linkedin muestra el nombre
   const handle = link.href === 'email'
     ? data.email
     : link.href === 'github'
@@ -68,14 +66,17 @@ function ContactCard({ link, data }) {
       style={{
         background:   hovered ? 'var(--surface2)' : 'var(--surface)',
         borderColor:  hovered ? link.color : 'var(--border)',
-        boxShadow:    hovered ? `0 8px 40px ${link.color}20` : 'none',
-        transform:    hovered ? 'translateY(-3px)' : 'translateY(0)',
+        boxShadow:    hovered
+          ? `0 8px 40px ${link.color}22, 0 0 0 1px ${link.color}15, inset 0 0 30px ${link.color}05`
+          : 'none',
+        transform:    hovered ? 'translateY(-4px)' : 'translateY(0)',
         color:        'var(--text)',
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {hovered && <span className="shimmer absolute inset-0 pointer-events-none" />}
+      {hovered && <span className="scan-overlay" />}
 
       {/* Top line */}
       <div
@@ -93,8 +94,8 @@ function ContactCard({ link, data }) {
           background:  `${link.color}12`,
           color:        link.color,
           border:       `1px solid ${link.color}30`,
-          transform:    hovered ? 'scale(1.08) rotate(-4deg)' : 'scale(1)',
-          boxShadow:    hovered ? `0 0 20px ${link.color}30` : 'none',
+          transform:    hovered ? 'scale(1.1) rotate(-5deg)' : 'scale(1)',
+          boxShadow:    hovered ? `0 0 24px ${link.color}40` : 'none',
         }}
       >
         {link.icon}
@@ -103,15 +104,18 @@ function ContactCard({ link, data }) {
       {/* Text */}
       <div className="flex-1 min-w-0">
         <div className="text-sm font-bold mb-0.5" style={{ color: 'var(--text)' }}>{link.label}</div>
-        <div className="text-xs truncate mb-1" style={{ color: link.color }}>{handle}</div>
+        <div className="text-xs truncate mb-1 font-semibold" style={{ color: link.color }}>{handle}</div>
         <div className="text-[10px]" style={{ color: 'var(--muted)' }}>{link.desc}</div>
       </div>
 
-      {/* Arrow */}
+      {/* Arrow animado */}
       <svg
         width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-        className="flex-shrink-0 transition-all duration-200"
-        style={{ color: hovered ? link.color : 'var(--border2)', transform: hovered ? 'translateX(2px)' : '' }}
+        className="flex-shrink-0 transition-all duration-300"
+        style={{
+          color: hovered ? link.color : 'var(--border2)',
+          transform: hovered ? 'translateX(3px)' : 'translateX(0)',
+        }}
       >
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
@@ -126,13 +130,15 @@ export default function Contact({ data }) {
     <section id="contacto" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto overflow-hidden">
       {/* Aurora de fondo */}
       <Aurora />
-      <GlowOrb x="50%" y="50%" color="var(--brand2)" size={600} opacity={0.06} />
+      <GlowOrb x="50%" y="50%" color="var(--brand2)" size={700} opacity={0.07} />
 
       {/* Rings decorativos */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border opacity-[0.03] animate-spin-slow"
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border opacity-[0.025] animate-spin-slow"
            style={{ borderColor: 'var(--brand)' }} />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full border opacity-[0.04]"
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full border opacity-[0.035]"
            style={{ borderColor: 'var(--brand2)', animation: 'spin-slow 20s linear infinite reverse' }} />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] rounded-full border opacity-[0.04]"
+           style={{ borderColor: 'var(--cyan)', animation: 'spin-slow 30s linear infinite' }} />
 
       <div className="relative z-10 max-w-2xl mx-auto">
 
@@ -141,18 +147,21 @@ export default function Contact({ data }) {
           <SectionBadge label="Contacto" color="cyan" />
           <SectionTitle>¿<span className="gradient-text">Hablamos</span>?</SectionTitle>
 
-          <p className="mt-4 text-sm leading-relaxed max-w-md mx-auto text-justify" style={{ color: 'var(--muted)' }}>
-            Estoy buscando nuevas oportunidades. Si tenés un proyecto o posición que creas que encaja
-            con mi perfil, escribime — respondo rápido.
+          <p className="mt-4 text-sm leading-relaxed max-w-md mx-auto" style={{ color: 'var(--muted)' }}>
+            Estoy buscando nuevas oportunidades. Si tenés un proyecto o posición que
+            creas que encaja con mi perfil, escribime — respondo rápido.
           </p>
 
-          {/* Email CTA principal */}
-          <div className="mt-8 mb-4">
+          {/* Email CTA principal — más dramático */}
+          <div className="mt-8 mb-6">
             <a
               href={`mailto:${data.email}`}
-              className="relative overflow-hidden inline-flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white transition-all active:scale-95 glow-brand w-full sm:w-auto"
+              className="relative overflow-hidden inline-flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base font-bold px-6 sm:px-10 py-4 sm:py-4.5 rounded-2xl text-white transition-all active:scale-95 hover:scale-105 glow-brand w-full sm:w-auto"
               style={{ background: 'linear-gradient(135deg, var(--brand), var(--brand2))' }}
             >
+              {/* Glow interno */}
+              <div className="pointer-events-none absolute inset-0 opacity-20"
+                style={{ background: 'radial-gradient(ellipse at 30% 50%, #fff, transparent)' }} />
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
@@ -165,7 +174,7 @@ export default function Contact({ data }) {
             </a>
           </div>
 
-          <p className="text-[11px]" style={{ color: 'var(--muted)' }}>
+          <p className="text-[11px] font-medium" style={{ color: 'var(--muted)' }}>
             También podés encontrarme en:
           </p>
         </div>
@@ -177,18 +186,47 @@ export default function Contact({ data }) {
           ))}
         </div>
 
-        {/* Disponibilidad */}
+        {/* Disponibilidad — rediseñado */}
         <div
-          className="mt-10 rounded-2xl border p-5 text-center"
-          style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+          className="relative mt-10 rounded-2xl border p-6 overflow-hidden"
+          style={{ background: 'var(--surface)', borderColor: 'rgba(61,214,140,0.2)' }}
         >
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="w-2 h-2 rounded-full" style={{ background: 'var(--green)', animation: 'pulse 2s ease infinite' }} />
-            <span className="text-sm font-bold" style={{ color: 'var(--green)' }}>Disponible</span>
+          <span className="scan-overlay" />
+          {/* Glow verde */}
+          <div className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            style={{ background: 'radial-gradient(circle at center, var(--green), transparent)' }} />
+
+          <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-3">
+              {/* Live dot con ring */}
+              <div className="relative flex-shrink-0">
+                <span
+                  className="block w-3 h-3 rounded-full"
+                  style={{ background: 'var(--green)', boxShadow: '0 0 12px var(--green)' }}
+                />
+                <span
+                  className="absolute inset-0 rounded-full animate-ping"
+                  style={{ background: 'var(--green)', opacity: 0.4 }}
+                />
+              </div>
+              <div>
+                <div className="text-sm font-bold" style={{ color: 'var(--green)' }}>Disponible ahora</div>
+                <div className="text-xs" style={{ color: 'var(--muted)' }}>Buenos Aires, Argentina</div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 sm:justify-end">
+              {['Remoto', 'Presencial', 'Freelance', 'Full-time'].map(m => (
+                <span
+                  key={m}
+                  className="text-[10px] font-semibold px-3 py-1 rounded-full border"
+                  style={{ color: 'var(--green)', borderColor: 'rgba(61,214,140,0.25)', background: 'rgba(61,214,140,0.07)' }}
+                >
+                  {m}
+                </span>
+              ))}
+            </div>
           </div>
-          <p className="text-xs text-justify" style={{ color: 'var(--muted)' }}>
-            Buenos Aires, Argentina · Remoto / Presencial · Freelance / Relación de dependencia
-          </p>
         </div>
 
       </div>
