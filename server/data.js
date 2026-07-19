@@ -22,7 +22,7 @@ export const portfolioData = {
     { title: "Backend PHP",         color: "#b07ef7", items: [{ label:"Laravel",hi:true},{ label:"Lumen",hi:true},{ label:"PHP",hi:false},{ label:"Eloquent",hi:false},{ label:"JWT",hi:false},{ label:"LDAP",hi:false},{ label:"Blade",hi:false}] },
     { title: "Backend JS",          color: "#3dd68c", items: [{ label:"Node.js",hi:true},{ label:"Express",hi:true},{ label:"TypeScript",hi:true},{ label:"REST API",hi:false},{ label:"Sequelize",hi:false},{ label:"node-cron",hi:false}] },
     { title: "Frontend",            color: "#38c5d9", items: [{ label:"React",hi:true},{ label:"Vite",hi:true},{ label:"Tailwind CSS",hi:false},{ label:"Chakra UI",hi:false},{ label:"Framer Motion",hi:false},{ label:"React Router",hi:false}] },
-    { title: "Bases de datos",      color: "#f7b155", items: [{ label:"MySQL",hi:true},{ label:"Oracle DB",hi:true},{ label:"SQLite",hi:false},{ label:"Firebase",hi:false}] },
+    { title: "Bases de datos",      color: "#f7b155", items: [{ label:"SQL Server",hi:true},{ label:"MySQL",hi:true},{ label:"Oracle DB",hi:true},{ label:"SQLite",hi:false},{ label:"Firebase",hi:false}] },
     { title: "APIs & Pagos",        color: "#f76f6f", items: [{ label:"Mercado Pago",hi:true},{ label:"Interbanking",hi:true},{ label:"Google Maps",hi:false},{ label:"Binance API",hi:false},{ label:"Twilio",hi:false},{ label:"Telegram Bot",hi:false}] },
     { title: "DevOps & Tooling",    color: "#4f8ef7", items: [{ label:"Docker",hi:true},{ label:"Git/GitLab",hi:false},{ label:"Vercel",hi:false},{ label:"SheetJS",hi:false},{ label:"JasperReports",hi:false}] }
   ],
