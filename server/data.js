@@ -7,8 +7,9 @@ export const portfolioData = {
     email: "lautaro.bazzola@gmail.com",
     linkedin: "https://linkedin.com/in/l-bazzola/",
     bio: [
-      "Desarrollo aplicaciones web completas para el sector público y privado. En la Municipalidad de Morón diseñé y mantuve un ecosistema de microservicios PHP/Laravel que integra sistemas legados como RAFAM, Oracle y PNET con portales web modernos para miles de ciudadanos.",
-      "También construyo productos propios: bots de mensajería con TypeScript, e-commerce con React + Firebase y plataformas de gestión sectorial. Me interesa resolver problemas reales con código limpio y arquitecturas simples."
+      "Soy Lautaro Bazzola, desarrollador Full Stack con base en Buenos Aires. Me especializo en construir sistemas web completos, desde APIs robustas hasta interfaces modernas, con foco en soluciones que funcionan en producción y resuelven problemas reales. Mi lenguaje principal es PHP con Laravel y Lumen, pero me muevo con igual comodidad en el ecosistema JavaScript: Node.js, TypeScript y React son parte de mi día a día.",
+      "La mayor parte de mi experiencia profesional la desarrollé en la Municipalidad de Morón, donde diseñé y mantuve desde cero un ecosistema de microservicios que hoy opera en producción para miles de vecinos y proveedores. Ese trabajo implicó integrar sistemas legados complejos como RAFAM, Oracle y PNET, implementar autenticación LDAP corporativa, procesar pagos reales con Mercado Pago e Interbanking, y entregar portales de autogestión que simplifican trámites que antes requerían presencia física.",
+      "En paralelo desarrollo proyectos propios: un bot de monitoreo de criptomonedas con notificaciones multicanal, una tienda online con checkout en producción, y sistemas de gestión sectorial. Me interesa trabajar en equipos que valoren el código limpio, la arquitectura simple y el impacto concreto de lo que se construye."
     ],
     stats: [
       { num: "12+", label: "Proyectos en producción" },
