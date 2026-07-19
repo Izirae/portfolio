@@ -12,33 +12,32 @@ function RadarChart({ pct, color, size = 80 }) {
   const poly = (rr) => Array.from({ length: points }, (_, i) => coords(i, rr))
     .map(p => `${p.x},${p.y}`).join(' ')
 
-  /* Colores fijos de alto contraste para las estructuras del radar */
-  const gridColor  = 'rgba(255,255,255,0.12)'
-  const spokeColor = 'rgba(255,255,255,0.10)'
-
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      {/* Fondos de rejilla — color neutro independiente del color del grupo */}
+      {/* Fondo relleno oscuro para que el polígono tenga contraste */}
+      <polygon points={poly(r)}
+        fill="rgba(0,0,0,0.35)" stroke="none" />
+      {/* Rejilla — anillos blancos bien visibles */}
       {[1, 0.66, 0.33].map(f => (
         <polygon key={f} points={poly(r * f)}
-          fill="none" stroke={gridColor} strokeWidth="0.8" />
+          fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="0.8" />
       ))}
       {/* Radios */}
       {Array.from({ length: points }, (_, i) => {
         const p = coords(i, r)
         return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y}
-          stroke={spokeColor} strokeWidth="0.8" />
+          stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" />
       })}
-      {/* Área rellena — color del grupo con buen contraste */}
+      {/* Área rellena del grupo */}
       <polygon points={poly(r * (pct / 100))}
-        fill={color} fillOpacity="0.25" stroke={color} strokeWidth="1.5" strokeOpacity="0.9" />
-      {/* Vértices del polígono de datos */}
+        fill={color} fillOpacity="0.40" stroke={color} strokeWidth="1.5" strokeOpacity="1" />
+      {/* Vértices */}
       {Array.from({ length: points }, (_, i) => {
         const p = coords(i, r * (pct / 100))
-        return <circle key={i} cx={p.x} cy={p.y} r="1.5" fill={color} opacity="0.9" />
+        return <circle key={i} cx={p.x} cy={p.y} r="1.5" fill={color} opacity="1" />
       })}
       {/* Centro */}
-      <circle cx={cx} cy={cy} r="2.5" fill={color} opacity="0.7" />
+      <circle cx={cx} cy={cy} r="2" fill={color} opacity="0.9" />
     </svg>
   )
 }

@@ -279,7 +279,6 @@ export default function Projects({ projects }) {
       <GlowOrb x="90%" y="70%" color="var(--brand2)" size={380} opacity={0.06} />
 
       <div className="relative z-10 mb-6">
-        <SectionBadge label="Trabajo real" color="green" />
         <SectionTitle>Proyectos <span className="gradient-text">destacados</span></SectionTitle>
         <p className="mt-3 text-sm max-w-xl text-justify" style={{ color: 'var(--muted)' }}>
           Hacé click en cualquier tarjeta para ver los detalles completos.
@@ -315,6 +314,21 @@ export default function Projects({ projects }) {
       {/* Sector Público */}
       {(filter === 'all' || filter === 'municipal') && municipal.length > 0 && (
         <>
+          {/* Pill solo para el bloque municipal */}
+          <div className="relative z-10 mb-5">
+            <span
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border"
+              style={{
+                color: 'var(--green)',
+                background: 'rgba(61,214,140,0.07)',
+                borderColor: 'rgba(61,214,140,0.25)',
+              }}
+            >
+              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: 'var(--green)' }} />
+              Aplicaciones en Producción
+            </span>
+          </div>
+
           {/* Banner municipal */}
           <div
             className="relative z-10 rounded-2xl border overflow-hidden mb-8"
