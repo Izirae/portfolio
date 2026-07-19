@@ -29,7 +29,7 @@ const links = [
   },
   {
     label:   'LinkedIn',
-    handle:  'https://linkedin.com/in/izirae/',
+    handle:  'https://linkedin.com/in/l-bazzola/',
     desc:    'Perfil profesional y experiencia laboral',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
