@@ -44,15 +44,20 @@ const links = [
 
 function ContactCard({ link, data }) {
   const [hovered, setHovered] = useState(false)
+
+  // Construir href: email → mailto, linkedin → URL directa del handle, github → data
   const href = link.href === 'email'
     ? `mailto:${data.email}`
+    : link.href === 'linkedin'
+    ? data.linkedin
     : data[link.href]
 
+  // Mostrar handle legible: email y github desde data, linkedin solo el path final
   const handle = link.href === 'email'
     ? data.email
     : link.href === 'github'
     ? data.github?.split('/').pop()
-    : link.handle
+    : data.linkedin?.replace('https://linkedin.com/in/', '').replace(/\/$/, '')
 
   return (
     <a

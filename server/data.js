@@ -4,8 +4,8 @@ export const portfolioData = {
     role: "Full Stack Developer",
     location: "Buenos Aires, Argentina",
     github: "https://github.com/Izirae",
-    email: "tu@email.com",
-    linkedin: "https://linkedin.com/in/tu-perfil",
+    email: "lautaro.bazzola@gmail.com",
+    linkedin: "https://linkedin.com/in/izirae/",
     bio: [
       "Desarrollo aplicaciones web completas para el sector público y privado. En la Municipalidad de Morón diseñé y mantuve un ecosistema de microservicios PHP/Laravel que integra sistemas legados como RAFAM, Oracle y PNET con portales web modernos para miles de ciudadanos.",
       "También construyo productos propios: bots de mensajería con TypeScript, e-commerce con React + Firebase y plataformas de gestión sectorial. Me interesa resolver problemas reales con código limpio y arquitecturas simples."
