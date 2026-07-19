@@ -98,7 +98,6 @@ function SkillCard({ group, index }) {
                 }}
               />
             ))}
-            <span className="text-[10px] font-semibold ml-1" style={{ color: group.color }}>{pct}%</span>
           </div>
         </div>
         <div className="flex-shrink-0" style={{ width: 56, height: 56 }}>
@@ -134,12 +133,6 @@ function ExpertiseBar({ label, pct, color, delay = 0 }) {
     <div ref={ref} className="mb-5">
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs font-semibold" style={{ color: 'var(--muted)' }}>{label}</span>
-        <span
-          className="text-[10px] font-bold tabular-nums transition-all duration-300"
-          style={{ color: visible ? color : 'transparent' }}
-        >
-          {pct}%
-        </span>
       </div>
       <div className="skill-bar-track">
         <div

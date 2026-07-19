@@ -382,7 +382,7 @@ export default function Projects({ projects }) {
                 </h3>
                 <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--muted)' }}>
                   Diseñé, desarrollé y mantuve un conjunto de sistemas web y microservicios que opera
-                  en producción para miles de vecinos y proveedores. El ecosistema cubre RAFAM, Oracle,
+                  en producción para miles de vecinos y proveedores. El ecosistema cubre Oracle,
                   Provincia.Net, Interbanking y portales de autogestión modernos.
                 </p>
                 <div className="flex flex-wrap gap-1.5">

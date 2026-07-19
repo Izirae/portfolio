@@ -7,7 +7,7 @@ const experience = [
     period:   '2021 – Actualidad',
     role:     'Full Stack Developer',
     company:  'Municipalidad de Morón',
-    desc:     'Desarrollo y mantenimiento del ecosistema de microservicios PHP/Laravel. Integración con RAFAM, Oracle, Provincia.Net e Interbanking. Portal de tasas, débito automático, portal de proveedores y sistema de permisos LDAP.',
+    desc:     'Desarrollo y mantenimiento del ecosistema de microservicios PHP/Laravel. Integración con Oracle, SQL Server, Provincia.Net e Interbanking. Portal de tasas, débito automático, portal de proveedores y sistema de permisos LDAP.',
     color:    '#4f8ef7',
     icon:     '🏛️',
     current:  true,
@@ -182,7 +182,7 @@ function BioParagraph({ text, keywords }) {
 
 const bioKeywords = [
   ['Full Stack', 'Buenos Aires', 'PHP', 'Laravel', 'Lumen', 'Node.js', 'TypeScript', 'React'],
-  ['Municipalidad de Morón', 'microservicios', 'producción', 'SQL Server', 'MySQL', 'RAFAM', 'Oracle', 'Provincia.Net', 'Mercado Pago', 'Interbanking', 'LDAP'],
+  ['Municipalidad de Morón', 'microservicios', 'producción', 'SQL Server', 'MySQL', 'Oracle', 'Provincia.Net', 'Mercado Pago', 'Interbanking', 'LDAP'],
   ['TypeScript', 'Telegram', 'Firebase', 'código limpio'],
 ]
 
