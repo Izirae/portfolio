@@ -95,7 +95,7 @@ export function SectionBadge({ label, color = 'brand' }) {
   )
 }
 
-/* ── Título de sección con underline gradiente ── */
+/* ── Título de sección ── */
 export function SectionTitle({ children }) {
   return (
     <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
@@ -126,10 +126,11 @@ export function TerminalWindow({ lines = [], className = '' }) {
   return (
     <div ref={ref} className={`terminal-window ${className}`}>
       <div className="terminal-bar">
-        <div className="terminal-dot" style={{ background: '#ff5f57' }} />
-        <div className="terminal-dot" style={{ background: '#febc2e' }} />
-        <div className="terminal-dot" style={{ background: '#28c840' }} />
-        <span style={{ color: '#484f58', fontSize: 11, marginLeft: 8, fontFamily: 'monospace' }}>
+        {/* Dots con colores fijos — migrables a Tailwind */}
+        <div className="terminal-dot bg-[#ff5f57]" />
+        <div className="terminal-dot bg-[#febc2e]" />
+        <div className="terminal-dot bg-[#28c840]" />
+        <span className="ml-2 text-[11px] font-mono text-[#484f58]">
           izirae@portfolio:~
         </span>
       </div>
@@ -251,7 +252,6 @@ export function NeonCard({ children, color = 'var(--brand)', className = '', sty
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Top accent line */}
       <div
         className="absolute top-0 left-0 right-0 h-px transition-opacity duration-300"
         style={{

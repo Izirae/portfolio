@@ -28,7 +28,6 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Cerrar menú al hacer click fuera
   useEffect(() => {
     if (!menuOpen) return
     const close = (e) => {
@@ -52,10 +51,9 @@ export default function Nav() {
           {/* Logo */}
           <a href="#" className="group flex items-center gap-2">
             <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black transition-all duration-300 group-hover:scale-110"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black text-white transition-all duration-300 group-hover:scale-110"
               style={{
                 background: 'linear-gradient(135deg, var(--brand), var(--brand2))',
-                color: '#fff',
                 boxShadow: '0 0 20px rgba(79,142,247,0.3)',
               }}
             >
@@ -98,7 +96,6 @@ export default function Nav() {
           </ul>
 
           <div className="flex items-center gap-3">
-
             {/* CTA */}
             <a
               href="#contacto"
